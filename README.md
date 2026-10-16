@@ -20,17 +20,17 @@ Or run `npm ci && npx playwright install webkit && npx playwright test --project
 
 ## Results
 
-| Environment | Target A | Target B |
-| --- | --- | --- |
-| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376) | $\color{red}{\textbf{copy}}$ | $\color{green}{\textbf{move}}$ |
-| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
-| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
-| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
-| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
-| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
-| MacBook, Safari 27.0.1 (manual) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
-| MacBook, Chrome 155 (manual) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
-| MacBook, Firefox 157 (manual) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| Env | Playwright | Browser | Target A | Target B |
+| --- | --- | --- | --- | --- |
+| GitHub Actions macos-latest | v1.65.0-alpha-2026-10-15 | WebKit 27.2 (build 2376) | $\color{red}{\textbf{copy}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions macos-latest | v1.65.0-alpha-2026-10-15 | Chromium 156.0.8078.12 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions macos-latest | v1.65.0-alpha-2026-10-15 | Firefox 157.0 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions ubuntu-latest | v1.65.0-alpha-2026-10-15 | WebKit 27.2 (build 2376) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions ubuntu-latest | v1.65.0-alpha-2026-10-15 | Chromium 156.0.8078.12 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions ubuntu-latest | v1.65.0-alpha-2026-10-15 | Firefox 157.0 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| MacBook | None (manual) | Safari 27.0.1 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| MacBook | None (manual) | Chrome 155 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| MacBook | None (manual) | Firefox 157 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
 
 ## Screenshots
 
