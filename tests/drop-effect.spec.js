@@ -10,7 +10,7 @@ test('dragend dropEffect is move', async ({ page, browser }, testInfo) => {
     await page.mouse.up()
   }
 
-  await page.screenshot({ path: `screenshots/${process.env.SCREENSHOT_NAME ?? testInfo.project.name}.png` })
+  await page.screenshot({ path: `screenshots/${process.env.SCREENSHOT_NAME ?? testInfo.project.name}.jpg`, type: 'jpeg', quality: 90 })
   const a = await page.locator('#a-result').textContent()
   const b = await page.locator('#b-result').textContent()
   console.log(`RESULT ${process.env.OS_NAME ?? ''} ${testInfo.project.name} ${browser.version()}: A=${a} B=${b}`)

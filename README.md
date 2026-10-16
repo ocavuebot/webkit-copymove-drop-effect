@@ -27,27 +27,27 @@ From [CI run 38852079851](https://github.com/ocavuebot/webkit-copymove-drop-effe
 
 ### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
 
-![](screenshots/macos-webkit.png)
+![](screenshots/macos-webkit.jpg)
 
 ### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12
 
-![](screenshots/macos-chromium.png)
+![](screenshots/macos-chromium.jpg)
 
 ### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0
 
-![](screenshots/macos-firefox.png)
+![](screenshots/macos-firefox.jpg)
 
 ### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
 
-![](screenshots/ubuntu-webkit.png)
+![](screenshots/ubuntu-webkit.jpg)
 
 ### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12
 
-![](screenshots/ubuntu-chromium.png)
+![](screenshots/ubuntu-chromium.jpg)
 
 ### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0
 
-![](screenshots/ubuntu-firefox.png)
+![](screenshots/ubuntu-firefox.jpg)
 
 ## Run it locally
 
