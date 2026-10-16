@@ -1,58 +1,71 @@
-# webkit-copymove-drop-effect
+# WebKit on macOS reports `dropEffect = 'copy'` in `dragend` for `effectAllowed = 'copyMove'`
 
-Does WebKit report `dropEffect = 'copy'` instead of `'move'` in `dragend` when the source sets `effectAllowed = 'copyMove'` and the drop target's `dragover` only calls `preventDefault()`?
+In Playwright's WebKit on macOS, when the drag source sets `effectAllowed = 'copyMove'` and the drop target's `dragover` only calls `preventDefault()`, `dataTransfer.dropEffect` in `dragend` is `copy`. Real Safari, Chromium, Firefox, and Playwright's WebKit on Linux all report `move`.
 
-Derived from [ocavuebot/playwright-drop-effect](https://github.com/ocavuebot/playwright-drop-effect).
+- Repo: https://github.com/ocavuebot/webkit-copymove-drop-effect
+- Page: https://ocavuebot.github.io/webkit-copymove-drop-effect/
+- Environment: GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
 
-- Page: [`docs/index.html`](docs/index.html), online at <https://ocavuebot.github.io/webkit-copymove-drop-effect/>. Open it in Safari, Chrome and Firefox and drag onto each target.
-  - Target A: `dragover` only calls `preventDefault()`.
-  - Target B (control): `dragover` sets `dropEffect = 'move'`.
-- Test: [`tests/drop-effect.spec.js`](tests/drop-effect.spec.js) drags onto both targets, saves a screenshot, and expects `move` in `dragend` for both, using `@playwright/test@1.65.0-alpha-2026-10-15`.
-- CI: the [Test workflow](https://github.com/ocavuebot/webkit-copymove-drop-effect/actions/workflows/test.yml) runs on Ubuntu and macOS; the job summary shows the observed values and screenshots are committed to [`screenshots/`](screenshots).
+## Steps
+
+1. Open the page. The source sets `effectAllowed = 'copyMove'`.
+2. Drag "Drag me" onto Target A (`dragover` only calls `preventDefault()`).
+3. Drag "Drag me" onto Target B (`dragover` sets `dropEffect = 'move'`).
+
+Or run `npm ci && npx playwright install webkit && npx playwright test --project=webkit` on macOS.
+
+**Expected:** `dragend` reports `move` for A and B, as in real Safari.
+
+**Actual:** `dragend` reports `copy` for A.
 
 ## Results
 
-From [CI run 38852079851](https://github.com/ocavuebot/webkit-copymove-drop-effect/actions/runs/38852079851). Values are `dropEffect` in `dragend`.
-
 | Environment | Target A | Target B |
 | --- | --- | --- |
-| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376) | `copy` | `move` |
-| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12 | `move` | `move` |
-| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0 | `move` | `move` |
-| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376) | `move` | `move` |
-| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12 | `move` | `move` |
-| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0 | `move` | `move` |
+| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376) | $\color{red}{\textbf{copy}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0 | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| MacBook, Safari 27.0.1 (manual) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| MacBook, Chrome 155 (manual) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
+| MacBook, Firefox 157 (manual) | $\color{green}{\textbf{move}}$ | $\color{green}{\textbf{move}}$ |
 
 ## Screenshots
 
-### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
+GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
 
-![](screenshots/macos-webkit.jpg)
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/macos-webkit.jpg)
 
-### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12
+GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12
 
-![](screenshots/macos-chromium.jpg)
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/macos-chromium.jpg)
 
-### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0
+GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0
 
-![](screenshots/macos-firefox.jpg)
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/macos-firefox.jpg)
 
-### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
+GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
 
-![](screenshots/ubuntu-webkit.jpg)
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/ubuntu-webkit.jpg)
 
-### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12
+GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12
 
-![](screenshots/ubuntu-chromium.jpg)
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/ubuntu-chromium.jpg)
 
-### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0
+GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0
 
-![](screenshots/ubuntu-firefox.jpg)
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/ubuntu-firefox.jpg)
 
-## Run it locally
+MacBook, Safari 27.0.1 (manual)
 
-```sh
-npm ci
-npx playwright install
-npx playwright test
-```
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/manual/macos-safari.png)
+
+MacBook, Chrome 155 (manual)
+
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/manual/macos-chrome.png)
+
+MacBook, Firefox 157 (manual)
+
+![](https://raw.githubusercontent.com/ocavuebot/webkit-copymove-drop-effect/main/screenshots/manual/macos-firefox.png)
