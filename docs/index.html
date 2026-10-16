@@ -3,6 +3,9 @@
 <title>dragend dropEffect with effectAllowed = copyMove</title>
 <style>
   div { padding: 20px; border: 1px solid; margin: 8px 0; }
+  output { font-weight: bold; color: grey; }
+  output[data-v='move'] { color: green; }
+  output[data-v='copy'] { color: red; }
 </style>
 
 <div id="source" draggable="true">Drag me</div>
@@ -32,7 +35,10 @@
     })
   }
   document.getElementById('source').addEventListener('dragend', (event) => {
-    if (target) document.getElementById(target + '-result').textContent = event.dataTransfer.dropEffect
+    if (target) {
+      const out = document.getElementById(target + '-result')
+      out.textContent = out.dataset.v = event.dataTransfer.dropEffect
+    }
     target = null
   })
 </script>
