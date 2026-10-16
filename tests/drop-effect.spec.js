@@ -1,19 +1,19 @@
 import { expect, test } from '@playwright/test'
 
-for (const id of ['implicit', 'explicit']) {
-  test(`dragend dropEffect is move (${id})`, async ({ page }, testInfo) => {
-    await page.goto(new URL('../docs/index.html', import.meta.url).href)
+test('dragend dropEffect is move', async ({ page }, testInfo) => {
+  await page.goto(new URL('../docs/index.html', import.meta.url).href)
 
+  for (const id of ['a', 'b']) {
     await page.locator('#source').hover()
     await page.mouse.down()
     await page.locator(`#${id}`).hover()
     await page.mouse.up()
+  }
 
-    const drop = await page.locator(`#${id}-drop`).textContent()
-    const dragend = await page.locator(`#${id}-dragend`).textContent()
-    console.log(`RESULT ${testInfo.project.name} ${id}: drop=${drop} dragend=${dragend}`)
-    testInfo.annotations.push({ type: 'result', description: `drop=${drop} dragend=${dragend}` })
+  await page.screenshot({ path: `screenshots/${process.env.SCREENSHOT_NAME ?? testInfo.project.name}.png` })
+  const a = await page.locator('#a-result').textContent()
+  const b = await page.locator('#b-result').textContent()
+  console.log(`RESULT ${testInfo.project.name}: A=${a} B=${b}`)
 
-    await expect(page.locator(`#${id}-dragend`)).toHaveText('move')
-  })
-}
+  expect({ a, b }).toEqual({ a: 'move', b: 'move' })
+})

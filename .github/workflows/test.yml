@@ -2,6 +2,7 @@ name: Test
 
 on:
   push:
+    paths-ignore: ['screenshots/**']
   workflow_dispatch:
 
 jobs:
@@ -13,6 +14,8 @@ jobs:
       matrix:
         os: [ubuntu, macos]
         browser: [chromium, firefox, webkit]
+    env:
+      SCREENSHOT_NAME: ${{ matrix.os }}-${{ matrix.browser }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,9 +25,29 @@ jobs:
       - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npx playwright test --project=${{ matrix.browser }} --reporter=list 2>&1 | tee out.txt; exit ${PIPESTATUS[0]}
       - if: always()
-        run: |
-          echo "### ${{ matrix.os }} / ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          grep -h '^RESULT' out.txt | sort -u >> $GITHUB_STEP_SUMMARY || true
-          npx playwright --version >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+        run: grep -h '^RESULT' out.txt | sed 's/^/${{ matrix.os }} /' >> $GITHUB_STEP_SUMMARY || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-${{ matrix.os }}-${{ matrix.browser }}
+          path: screenshots/
+
+  screenshots:
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: screenshot-*
+          path: screenshots
+          merge-multiple: true
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add screenshots
+          git diff --cached --quiet || git commit -m "Update screenshots [skip ci]"
+          git push

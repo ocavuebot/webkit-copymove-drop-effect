@@ -1,45 +1,38 @@
 <!doctype html>
 <meta charset="UTF-8" />
-<title>dropEffect with effectAllowed = copyMove</title>
+<title>dragend dropEffect with effectAllowed = copyMove</title>
 <style>
   div { padding: 20px; border: 1px solid; margin: 8px 0; }
 </style>
 
-<p>Source sets <code>effectAllowed = 'copyMove'</code>. Drag it onto each target.</p>
 <div id="source" draggable="true">Drag me</div>
-<div id="implicit">Target A: dragover only calls preventDefault()</div>
-<div id="explicit">Target B: dragover sets dropEffect = 'move'</div>
-
-<table border="1">
-  <tr><th>Target</th><th>drop</th><th>dragend</th></tr>
-  <tr><td>A (implicit)</td><td id="implicit-drop"></td><td id="implicit-dragend"></td></tr>
-  <tr><td>B (explicit move)</td><td id="explicit-drop"></td><td id="explicit-dragend"></td></tr>
-</table>
-<p>User agent: <code id="ua"></code></p>
+<div id="a">Target A: dragover only calls preventDefault()</div>
+<div id="b">Target B: dragover sets dropEffect = 'move'</div>
+<p>A dragend: <output id="a-result"></output></p>
+<p>B dragend: <output id="b-result"></output></p>
+<p><code id="ua"></code></p>
 
 <script>
   document.getElementById('ua').textContent = navigator.userAgent
-  const source = document.getElementById('source')
-  let last = null
+  let target = null
 
-  source.addEventListener('dragstart', (event) => {
+  document.getElementById('source').addEventListener('dragstart', (event) => {
     event.dataTransfer.setData('text/plain', 'data')
     event.dataTransfer.effectAllowed = 'copyMove'
   })
-  for (const id of ['implicit', 'explicit']) {
-    const target = document.getElementById(id)
-    target.addEventListener('dragover', (event) => {
+  for (const id of ['a', 'b']) {
+    const el = document.getElementById(id)
+    el.addEventListener('dragover', (event) => {
       event.preventDefault()
-      if (id === 'explicit') event.dataTransfer.dropEffect = 'move'
+      if (id === 'b') event.dataTransfer.dropEffect = 'move'
     })
-    target.addEventListener('drop', (event) => {
+    el.addEventListener('drop', (event) => {
       event.preventDefault()
-      last = id
-      document.getElementById(id + '-drop').textContent = event.dataTransfer.dropEffect
+      target = id
     })
   }
-  source.addEventListener('dragend', (event) => {
-    if (last) document.getElementById(last + '-dragend').textContent = event.dataTransfer.dropEffect
-    last = null
+  document.getElementById('source').addEventListener('dragend', (event) => {
+    if (target) document.getElementById(target + '-result').textContent = event.dataTransfer.dropEffect
+    target = null
   })
 </script>
