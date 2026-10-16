@@ -10,29 +10,42 @@ Derived from [ocavuebot/playwright-drop-effect](https://github.com/ocavuebot/pla
 - Test: [`tests/drop-effect.spec.js`](tests/drop-effect.spec.js) drags onto both targets, saves a screenshot, and expects `move` in `dragend` for both, using `@playwright/test@1.65.0-alpha-2026-10-15`.
 - CI: the [Test workflow](https://github.com/ocavuebot/webkit-copymove-drop-effect/actions/workflows/test.yml) runs on Ubuntu and macOS; the job summary shows the observed values and screenshots are committed to [`screenshots/`](screenshots).
 
+## Results
+
+From [CI run 38852079851](https://github.com/ocavuebot/webkit-copymove-drop-effect/actions/runs/38852079851). Values are `dropEffect` in `dragend`.
+
+| Environment | Target A | Target B |
+| --- | --- | --- |
+| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376) | `copy` | `move` |
+| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12 | `move` | `move` |
+| GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0 | `move` | `move` |
+| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376) | `move` | `move` |
+| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12 | `move` | `move` |
+| GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0 | `move` | `move` |
+
 ## Screenshots
 
-### macos-webkit
+### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
 
 ![](screenshots/macos-webkit.png)
 
-### macos-chromium
+### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12
 
 ![](screenshots/macos-chromium.png)
 
-### macos-firefox
+### GitHub Actions macOS v26.6.2, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0
 
 ![](screenshots/macos-firefox.png)
 
-### ubuntu-webkit
+### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, WebKit 27.2 (build 2376)
 
 ![](screenshots/ubuntu-webkit.png)
 
-### ubuntu-chromium
+### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Chromium 156.0.8078.12
 
 ![](screenshots/ubuntu-chromium.png)
 
-### ubuntu-firefox
+### GitHub Actions Ubuntu v24.04.5 LTS, Playwright v1.65.0-alpha-2026-10-15, Firefox 157.0
 
 ![](screenshots/ubuntu-firefox.png)
 
