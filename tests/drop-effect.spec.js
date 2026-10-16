@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('dragend dropEffect is move', async ({ page }, testInfo) => {
+test('dragend dropEffect is move', async ({ page, browser }, testInfo) => {
   await page.goto(new URL('../docs/index.html', import.meta.url).href)
 
   for (const id of ['a', 'b']) {
@@ -13,7 +13,7 @@ test('dragend dropEffect is move', async ({ page }, testInfo) => {
   await page.screenshot({ path: `screenshots/${process.env.SCREENSHOT_NAME ?? testInfo.project.name}.png` })
   const a = await page.locator('#a-result').textContent()
   const b = await page.locator('#b-result').textContent()
-  console.log(`RESULT ${testInfo.project.name}: A=${a} B=${b}`)
+  console.log(`RESULT ${process.env.OS_NAME ?? ''} ${testInfo.project.name} ${browser.version()}: A=${a} B=${b}`)
 
   expect({ a, b }).toEqual({ a: 'move', b: 'move' })
 })

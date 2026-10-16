@@ -23,6 +23,10 @@ jobs:
           node-version: 24
       - run: npm ci
       - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: |
+          if [ "$RUNNER_OS" = macOS ]; then v="macOS $(sw_vers -productVersion)"; else v="$(lsb_release -ds)"; fi
+          echo "OS_NAME=$v" >> $GITHUB_ENV
+          echo "Playwright $(npx playwright --version)" >> $GITHUB_STEP_SUMMARY
       - run: npx playwright test --project=${{ matrix.browser }} --reporter=list 2>&1 | tee out.txt; exit ${PIPESTATUS[0]}
       - if: always()
         run: grep -h '^RESULT' out.txt | sed 's/^/${{ matrix.os }} /' >> $GITHUB_STEP_SUMMARY || true
